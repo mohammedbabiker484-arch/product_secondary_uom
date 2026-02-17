@@ -7,7 +7,7 @@
         Implements a complete Secondary Unit of Measure (Secondary UoM) system fully integrated into:
         Product → Purchase → Inventory → Sales → Accounting.
     """,
-    'author': 'Antigravity',
+    'author': 'Mohammed Gameel',
     'depends': ['product', 'purchase', 'sale_stock', 'stock', 'account'],
     'data': [
         'security/ir.model.access.csv',
