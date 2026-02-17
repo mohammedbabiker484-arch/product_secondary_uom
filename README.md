@@ -59,10 +59,6 @@ graph TD
     AML -- "7. Sync Qty <-> Sec. Qty (Stored Compute)" --> AML
 ```
 
-## Screenshots
-
-### Vendor Bill (Secondary UoM)
-![Vendor Bill Draft](C:\Users\hp\.gemini\antigravity\brain\1407c2b1-9f32-466a-90a8-cb37c010e1de\media__1771307511671.png)
 
 ## Technical Details
 
