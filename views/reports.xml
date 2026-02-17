@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Sale Order Report -->
+    <template id="report_saleorder_document_secondary" inherit_id="sale.report_saleorder_document">
+        <xpath expr="//th[@name='th_quantity']" position="after">
+            <th name="th_secondary_quantity" class="text-end">Sec. Qty</th>
+        </xpath>
+        <xpath expr="//td[@name='td_product_quantity']" position="after">
+            <td name="td_secondary_quantity" class="text-end">
+                <span t-field="line.secondary_quantity"/>
+                <span t-field="line.secondary_uom_id"/>
+            </td>
+        </xpath>
+    </template>
+
+    <!-- Purchase Order Report -->
+    <template id="report_purchaseorder_document_secondary" inherit_id="purchase.report_purchaseorder_document">
+        <xpath expr="//th[@name='th_quantity']" position="after">
+            <th name="th_secondary_quantity" class="text-end">Sec. Qty</th>
+        </xpath>
+        <xpath expr="//span[@t-field='line.product_qty']/.." position="after">
+            <td class="text-end">
+                <span t-field="line.secondary_quantity"/>
+                <span t-field="line.secondary_uom_id"/>
+            </td>
+        </xpath>
+    </template>
+
+    <!-- Stock Picking Report (Delivery Slip) -->
+    <template id="report_delivery_document_secondary" inherit_id="stock.report_delivery_document">
+        <!-- Add header for non-done picking -->
+        <xpath expr="//th[@name='th_sm_quantity']" position="after">
+            <th name="th_sm_secondary_quantity" class="text-end">Sec. Qty</th>
+        </xpath>
+        <!-- Add header for done picking -->
+        <xpath expr="//th[@name='th_sml_quantity']" position="after">
+            <th name="th_sml_secondary_quantity" class="text-end">Sec. Qty</th>
+        </xpath>
+        <!-- Add value for non-done picking (stock_move_table) -->
+        <xpath expr="//table[@name='stock_move_table']//td[@class='o_td_quantity text-end'][last()]" position="after">
+            <td class="text-end">
+                <span t-field="move.secondary_qty_done"/>
+            </td>
+        </xpath>
+    </template>
+
+    <!-- Done picking (move lines with serials) -->
+    <template id="stock_report_delivery_has_serial_move_line_secondary" inherit_id="stock.stock_report_delivery_has_serial_move_line">
+        <xpath expr="//td[@name='move_line_lot_quantity']" position="after">
+            <td class="text-end">
+                <span t-field="move_line.secondary_qty_done"/>
+            </td>
+        </xpath>
+    </template>
+
+    <!-- Done picking (aggregated lines) -->
+    <template id="stock_report_delivery_aggregated_move_lines_secondary" inherit_id="stock.stock_report_delivery_aggregated_move_lines">
+        <xpath expr="//td[@name='move_line_aggregated_quantity']" position="after">
+            <td class="text-end">
+                <t t-set="product" t-value="aggregated_lines[line]['product']"/>
+                <t t-if="product.enable_secondary_uom">
+                    <span t-out="product.convert_to_secondary(aggregated_lines[line]['quantity'])"/>
+                    <span t-field="product.secondary_uom_id"/>
+                </t>
+            </td>
+        </xpath>
+    </template>
+
+    <!-- Invoice Report -->
+    <template id="report_invoice_document_secondary" inherit_id="account.report_invoice_document">
+        <xpath expr="//th[@name='th_quantity']" position="after">
+            <th name="th_secondary_quantity" class="text-end">Sec. Qty</th>
+        </xpath>
+        <xpath expr="//td[@name='td_quantity']" position="after">
+            <td class="text-end">
+                <span t-field="line.secondary_quantity"/>
+                <span t-field="line.secondary_uom_id"/>
+            </td>
+        </xpath>
+    </template>
+</odoo>

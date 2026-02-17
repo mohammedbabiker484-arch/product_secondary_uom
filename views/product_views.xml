@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- 
+        Extends the Product Template form to include secondary UoM configuration.
+        Adds a toggle to enable secondary UoM and a dedicated tab for its configuration.
+    -->
+    <record id="product_template_form_view_secondary_uom" model="ir.ui.view">
+        <field name="name">product.template.form.secondary.uom</field>
+        <field name="model">product.template</field>
+        <field name="inherit_id" ref="product.product_template_only_form_view"/>
+        <field name="arch" type="xml">
+            <!-- Position the toggle checkbox below the 'On Hand' quantity for better visibility -->
+            <xpath expr="//div[@invisible='not is_storable']" position="after">
+                <field name="enable_secondary_uom" invisible="not is_storable"/>
+            </xpath>
+
+            <!-- Add a dedicated page for secondary UoM configuration, visible only when enabled -->
+            <xpath expr="//page[@name='inventory']" position="after">
+                <page string="Secondary UoM" name="secondary_uom" invisible="not enable_secondary_uom">
+                    <group>
+                        <group string="Configuration">
+                            <field name="secondary_uom_id" required="enable_secondary_uom"/>
+                            <field name="secondary_uom_ratio" required="enable_secondary_uom"/>
+                            <field name="secondary_tracking_type"/>
+                        </group>
+                    </group>
+                </page>
+            </xpath>
+        </field>
+    </record>
+</odoo>

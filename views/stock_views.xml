@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- 
+        Extends the Inventory Picking form to track secondary quantities done.
+    -->
+    <record id="view_picking_form_secondary_uom" model="ir.ui.view">
+        <field name="name">stock.picking.form.secondary.uom</field>
+        <field name="model">stock.picking</field>
+        <field name="inherit_id" ref="stock.view_picking_form"/>
+        <field name="arch" type="xml">
+            <!-- Operations Tab: move_ids list. Adds demand and done quantities in secondary units. -->
+            <xpath expr="//field[@name='move_ids']/list/field[@name='product_uom']" position="after">
+                <field name="secondary_qty" optional="hide" string="Sec. Demand"/>
+                <field name="secondary_qty_done" optional="hide" string="Sec. Done" decoration-danger="secondary_qty and secondary_qty_done > secondary_qty"/>
+                <field name="secondary_uom_id" optional="hide"/>
+            </xpath>
+        </field>
+    </record>
+
+    <!-- Detailed Operations Popup list (when clicking a move) -->
+    <record id="view_stock_move_line_operation_tree_secondary_uom" model="ir.ui.view">
+        <field name="name">stock.move.line.operation.tree.secondary.uom</field>
+        <field name="model">stock.move.line</field>
+        <field name="inherit_id" ref="stock.view_stock_move_line_operation_tree"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='product_uom_id']" position="after">
+                <field name="secondary_qty_done" optional="hide" string="Sec. Done"/>
+                <field name="secondary_uom_id" optional="hide"/>
+            </xpath>
+        </field>
+    </record>
+
+    <!-- Detailed Operations Pop-up list (detailed operation tree) -->
+    <record id="view_stock_move_line_detailed_operation_tree_secondary_uom" model="ir.ui.view">
+        <field name="name">stock.move.line.detailed.operation.tree.secondary.uom</field>
+        <field name="model">stock.move.line</field>
+        <field name="inherit_id" ref="stock.view_stock_move_line_detailed_operation_tree"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='product_uom_id']" position="after">
+                <field name="secondary_qty_done" optional="hide" string="Sec. Done"/>
+                <field name="secondary_uom_id" optional="hide"/>
+            </xpath>
+        </field>
+    </record>
+
+    <!-- Moves History (general list view for move lines) -->
+    <record id="view_move_line_tree_secondary_uom" model="ir.ui.view">
+        <field name="name">stock.move.line.list.secondary.uom</field>
+        <field name="model">stock.move.line</field>
+        <field name="inherit_id" ref="stock.view_move_line_tree"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='product_uom_id']" position="after">
+                <field name="secondary_qty_done" optional="hide" string="Sec. Done"/>
+                <field name="secondary_uom_id" optional="hide"/>
+            </xpath>
+        </field>
+    </record>
+
+    <!-- 
+        Extends the Stock Quant (Inventory Levels) tree view to show stock in secondary units.
+    -->
+    <record id="view_stock_quant_tree_secondary_uom" model="ir.ui.view">
+        <field name="name">stock.quant.tree.secondary.uom</field>
+        <field name="model">stock.quant</field>
+        <field name="inherit_id" ref="stock.view_stock_quant_tree_editable"/>
+        <field name="arch" type="xml">
+            <!-- Position secondary quantity after primary UoM field. -->
+            <xpath expr="//field[@name='product_uom_id']" position="after">
+                <field name="secondary_quantity" optional="hide" readonly="1"/>
+                <field name="secondary_uom_id" optional="hide"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>

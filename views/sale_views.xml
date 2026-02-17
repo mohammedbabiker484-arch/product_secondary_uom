@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- 
+        Extends the Sale Order form to display secondary quantities in order lines.
+        Inherits the 'sale.view_order_form' and adds fields to the 'order_line' list view.
+    -->
+    <record id="view_order_form_secondary_uom" model="ir.ui.view">
+        <field name="name">sale.order.form.secondary.uom</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form"/>
+        <field name="arch" type="xml">
+            <!-- Position secondary fields after the primary UoM field. Set to hidden by default for a lean UI. -->
+            <xpath expr="//field[@name='order_line']/list/field[@name='product_uom_id']" position="after">
+                <field name="secondary_quantity" optional="hide"/>
+                <field name="secondary_uom_id" optional="hide"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>
